@@ -76,16 +76,11 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
     }
     
     @objc func handleSelectProfileImageView() {
+        
         let picker = UIImagePickerController()
-        
-        
         picker.allowsEditing = true
         picker.delegate = self
-        
-        
         present(picker, animated: true, completion: nil)
-        
-
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {

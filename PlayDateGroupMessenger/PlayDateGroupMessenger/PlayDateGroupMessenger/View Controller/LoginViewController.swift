@@ -118,26 +118,20 @@ class LoginViewController: UIViewController {
         return textField
     }()
     
-    let profileImageView: UIImageView = {
-        var imageView = UIImageView()
+   lazy var profileImageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.image = UIImage(named: "profile2")
         imageView.translatesAutoresizingMaskIntoConstraints = false
 //        imageView.contentMode = .scaleToFill
-        imageView.layer.cornerRadius = imageView.frame.size.width/2
-        imageView.clipsToBounds = true
-        imageView.alpha = 5
-        
-        // original code below   NEEDS TO BE FIXED _ THE TAP NOT WORKING
-//        imageView.addGestureRecognizer(UITapGestureRecognizer(target:
-//          self, action: #selector(handleSelectProfileImageView)))
-        
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: LoginViewController.self, action: #selector(handleSelectProfileImageView)))
-        
+//        imageView.layer.cornerRadius = imageView.frame.size.width/2
+//        imageView.clipsToBounds = true
+//        imageView.alpha = 1
+    
+    imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
 
         
-        
         imageView.isUserInteractionEnabled = true
-        
+    
         return imageView
         
     }()
@@ -227,9 +221,9 @@ class LoginViewController: UIViewController {
 //        appLogo.centerXAnchor.constraint(lessThanOrEqualTo: view.centerXAnchor, constant: -110).isActive = true
 //        appLogo.centerYAnchor.constraint(equalTo: profileImageView.topAnchor, constant: -75).isActive = true
         appLogo.centerXAnchor.constraint(lessThanOrEqualTo: view.centerXAnchor, constant: -75).isActive = true
-        appLogo.bottomAnchor.constraint(equalTo: profileImageView.topAnchor, constant: -10).isActive = true
-        appLogo.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        appLogo.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        appLogo.bottomAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 10).isActive = true
+        appLogo.widthAnchor.constraint(equalToConstant: 160).isActive = true
+        appLogo.heightAnchor.constraint(equalToConstant: 140).isActive = true
     }
     
     func  setupProfileImageView() {
