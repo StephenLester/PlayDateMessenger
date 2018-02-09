@@ -209,29 +209,34 @@ class LoginViewController: UIViewController {
     
     func setupLoginRegisterSegmentedControl() {
         // Register Constraints
-        loginRegisterSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loginRegisterSegmentedControl.bottomAnchor.constraint(equalTo: imputContainerView.topAnchor, constant: -12).isActive = true
-        loginRegisterSegmentedControl.widthAnchor.constraint(equalTo: imputContainerView.widthAnchor, multiplier: 0.7).isActive = true
-        loginRegisterSegmentedControl.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
+        NSLayoutConstraint.activate([
+        loginRegisterSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        loginRegisterSegmentedControl.bottomAnchor.constraint(equalTo: imputContainerView.topAnchor, constant: -12),
+        loginRegisterSegmentedControl.widthAnchor.constraint(equalTo: imputContainerView.widthAnchor, multiplier: 0.7),
+        loginRegisterSegmentedControl.heightAnchor.constraint(equalToConstant: 36),
+    ])
     }
     
     func setupAppLogo() {
         // App logo constraints
 //        appLogo.centerXAnchor.constraint(lessThanOrEqualTo: view.centerXAnchor, constant: -110).isActive = true
 //        appLogo.centerYAnchor.constraint(equalTo: profileImageView.topAnchor, constant: -75).isActive = true
-        appLogo.centerXAnchor.constraint(lessThanOrEqualTo: view.centerXAnchor, constant: -75).isActive = true
-        appLogo.bottomAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 10).isActive = true
-        appLogo.widthAnchor.constraint(equalToConstant: 160).isActive = true
-        appLogo.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        NSLayoutConstraint.activate([
+        appLogo.centerXAnchor.constraint(lessThanOrEqualTo: view.centerXAnchor, constant: -75),
+        appLogo.bottomAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 10),
+        appLogo.widthAnchor.constraint(equalToConstant: 160),
+        appLogo.heightAnchor.constraint(equalToConstant: 140),
+    ])
     }
     
     func  setupProfileImageView() {
         // Profile constraints
-        profileImageView.centerXAnchor.constraint(lessThanOrEqualTo: view.centerXAnchor).isActive = true
-        profileImageView.bottomAnchor.constraint(equalTo: loginRegisterSegmentedControl.topAnchor, constant: -15).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        NSLayoutConstraint.activate([
+        profileImageView.centerXAnchor.constraint(lessThanOrEqualTo: view.centerXAnchor),
+        profileImageView.bottomAnchor.constraint(equalTo: loginRegisterSegmentedControl.topAnchor, constant: -15),
+        profileImageView.widthAnchor.constraint(equalToConstant: 120),
+        profileImageView.heightAnchor.constraint(equalToConstant: 120),
+        ])
         
     }
     
@@ -241,7 +246,7 @@ class LoginViewController: UIViewController {
     var passwordTextFieldHightAnchor: NSLayoutConstraint?
     
     func setupImputsContainerView() {
-        // constraints
+        // Container constraints
         imputContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imputContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100).isActive = true
         imputContainerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true

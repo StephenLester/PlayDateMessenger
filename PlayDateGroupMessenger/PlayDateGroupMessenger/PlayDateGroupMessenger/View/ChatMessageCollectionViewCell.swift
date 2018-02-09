@@ -129,30 +129,37 @@ class ChatMessageCollectionViewCell: UICollectionViewCell {
         addSubview(profileImageView)
         
         bubbleView.addSubview(messageImageView)
-        messageImageView.leftAnchor.constraint(equalTo: bubbleView.leftAnchor).isActive = true
-        messageImageView.topAnchor.constraint(equalTo: bubbleView.topAnchor).isActive = true
-        messageImageView.widthAnchor.constraint(equalTo: bubbleView.widthAnchor).isActive = true
-        messageImageView.heightAnchor.constraint(equalTo: bubbleView.heightAnchor).isActive = true
+        NSLayoutConstraint.activate([
+        messageImageView.leftAnchor.constraint(equalTo: bubbleView.leftAnchor),
+        messageImageView.topAnchor.constraint(equalTo: bubbleView.topAnchor),
+        messageImageView.widthAnchor.constraint(equalTo: bubbleView.widthAnchor),
+        messageImageView.heightAnchor.constraint(equalTo: bubbleView.heightAnchor)
+            ])
         
         bubbleView.addSubview(playButton)
         //x,y,w,h
-        playButton.centerXAnchor.constraint(equalTo: bubbleView.centerXAnchor).isActive = true
-        playButton.centerYAnchor.constraint(equalTo: bubbleView.centerYAnchor).isActive = true
-        playButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        playButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        NSLayoutConstraint.activate([
+        playButton.centerXAnchor.constraint(equalTo: bubbleView.centerXAnchor),
+        playButton.centerYAnchor.constraint(equalTo: bubbleView.centerYAnchor),
+        playButton.widthAnchor.constraint(equalToConstant: 50),
+        playButton.heightAnchor.constraint(equalToConstant: 50)
+            ])
         
         bubbleView.addSubview(activityIndicatorView)
         //x,y,w,h
-        activityIndicatorView.centerXAnchor.constraint(equalTo: bubbleView.centerXAnchor).isActive = true
-        activityIndicatorView.centerYAnchor.constraint(equalTo: bubbleView.centerYAnchor).isActive = true
-        activityIndicatorView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        activityIndicatorView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        NSLayoutConstraint.activate([
+        activityIndicatorView.centerXAnchor.constraint(equalTo: bubbleView.centerXAnchor),
+        activityIndicatorView.centerYAnchor.constraint(equalTo: bubbleView.centerYAnchor),
+        activityIndicatorView.widthAnchor.constraint(equalToConstant: 50),
+        activityIndicatorView.heightAnchor.constraint(equalToConstant: 50),
         
         //x,y,w,h
-        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
-        profileImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8),
+        profileImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+        profileImageView.widthAnchor.constraint(equalToConstant: 32),
+        profileImageView.heightAnchor.constraint(equalToConstant: 32)
+        ])
+            
         
         //x,y,w,h
         
@@ -182,6 +189,7 @@ class ChatMessageCollectionViewCell: UICollectionViewCell {
         
         
         textView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
