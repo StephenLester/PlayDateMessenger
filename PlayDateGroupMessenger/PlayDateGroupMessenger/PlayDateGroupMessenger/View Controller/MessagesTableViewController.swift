@@ -172,6 +172,8 @@ class MessagesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    
         let message = messages[indexPath.row]
         
         guard let chatPartnerId = message.chatPartnerId() else {

@@ -9,21 +9,46 @@
 import UIKit
 import Firebase
 
-class NewMessageViewController: UITableViewController {
+class NewMessageViewController: UITableViewController{
+    
+    
+    let searchbar = UISearchBar(frame: CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width), height: 40))
+//    fileprivate let searchBarHight = CGFloat(40)
+    var filteredSearchBar = [User]()
+    var isSearching: Bool = false
+    
     
     let cellId = "cellId"
     
     var users = [User]()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        navigationItem.title = "Search UserNames"
+        
+        
         
         tableView.register(UserTableViewCell.self, forCellReuseIdentifier: cellId)
         
         tableView.backgroundView = UIImageView(image: UIImage(named: "NewMessageImage"))
         fetchUser()
+        
+
+       
+        view.addSubview(searchbar)
+        
+        tableView.tableHeaderView = searchbar
+        searchbar.returnKeyType = UIReturnKeyType.done
+        searchbar.backgroundColor = UIColor.clear
+        searchbar.delegate = self
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        searchbar.text = ""
+        
     }
     
     func fetchUser() {
@@ -50,24 +75,40 @@ class NewMessageViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if isSearching {
+            return filteredSearchBar.count
+        }
         return users.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserTableViewCell
         cell.backgroundColor = UIColor.clear
         
-        let user = users[indexPath.row]
+        if isSearching {
+        let user = filteredSearchBar[indexPath.row]
         cell.textLabel?.text = user.name
-        cell.detailTextLabel?.text = user.email
+        //cell.detailTextLabel?.text = user.email
         
         if let profileImageUrl = user.profileImageUrl {
             cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+            
+            } else {
+            
+            let user = users[indexPath.row]
+            cell.textLabel?.text = user.name
+            //cell.detailTextLabel?.text = user.email
+            
+            if let profileImageUrl = user.profileImageUrl {
+                cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+                }
+            }
         }
-        
-        return cell
+    return cell
     }
-    
+        
+   
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 72
     }
@@ -86,10 +127,56 @@ class NewMessageViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true) {
             print("Dismiss completed")
-            let user = self.users[indexPath.row]
-            self.messagesController?.showChatControllerForUser(user)
+            if self.isSearching {
+                let user = self.filteredSearchBar[indexPath.row]
+                self.messagesController?.showChatControllerForUser(user)
+            } else {
+                let user = self.users[indexPath.row]
+                self.messagesController?.showChatControllerForUser(user)
+            }
         }
     }
     
+}
+
+
+extension NewMessageViewController: UISearchBarDelegate {
+    
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        isSearching = true
+    }
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        isSearching = false
+//    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
+    }
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
+    }
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        filteredSearchBar.removeAll(keepingCapacity: false)
+//        guard let predicateString = searchBar.text else { return }
+//        filteredSearchBar = users.filter({$0.name?.range(of: predicateString) != nil})
+//        filteredSearchBar.sort {$0.name! < $1.name!}
+//        isSearching = (filteredSearchBar.count == 0) ? false : true
+//        tableView.reloadData()
+//        }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text == nil || searchBar.text == "" {
+            isSearching = false
+            view.endEditing(true)
+            tableView.reloadData()
+        } else {
+            isSearching = true
+            guard let usersString = searchBar.text else { return }
+            filteredSearchBar = users.filter({$0.name?.range(of: usersString) != nil})
+            filteredSearchBar.sort {$0.name! < $1.name!}
+            isSearching = (filteredSearchBar.count == 0) ? false : true
+            tableView.reloadData()
+        }
+    }
 }
 
