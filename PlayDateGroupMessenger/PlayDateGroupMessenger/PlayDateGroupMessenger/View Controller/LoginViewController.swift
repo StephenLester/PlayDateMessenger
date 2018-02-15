@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     var messagesController: MessagesTableViewController?
     
@@ -74,7 +74,7 @@ class LoginViewController: UIViewController {
         logoImageView.contentMode = .scaleToFill
         logoImageView.layer.cornerRadius = 20
         logoImageView.layer.masksToBounds = true
-        logoImageView.alpha = 0.7
+        logoImageView.alpha = 1
         return logoImageView
     }()
 
@@ -128,10 +128,7 @@ class LoginViewController: UIViewController {
 //        imageView.alpha = 1
     
     imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
-
-        
         imageView.isUserInteractionEnabled = true
-    
         return imageView
         
     }()
@@ -180,25 +177,17 @@ class LoginViewController: UIViewController {
         view.addSubview(loginRegisterButton)
         view.addSubview(profileImageView)
         view.addSubview(loginRegisterSegmentedControl)
-        
-        
-        
+
+    
         setupAppLogo()
         setupImputsContainerView()
         setupLoginRegisterButton()
         setupProfileImageView()
         setupLoginRegisterSegmentedControl()
         hideKeyboardWhenTappedAround()
-    
-        // this func below made the tap guesture happen all around the view and not just the blue default image
-        //uploadProfileImage()
-    
+ 
     }
-    
-    
-    
-   
-    
+
     func assignBackgroundImage() {
         let backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
         backgroundImageView.image = UIImage(named: "background1")
@@ -305,6 +294,14 @@ class LoginViewController: UIViewController {
         
         
     }
+    
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        self.nameTextField.resignFirstResponder()
+//        self.emailTextField.resignFirstResponder()
+//        self.passwordTextField.resignFirstResponder()
+//        self.view.endEditing(true)
+//        return true
+//    }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return.lightContent
@@ -328,14 +325,7 @@ extension UIViewController {
         view.endEditing(true)
     }
 }
-//extension UIViewController {
-//    func uploadProfileImage() {
-//
-//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.handleSelectProfileImageView))
-////        tap.cancelsTouchesInView = false
-//        view.addGestureRecognizer(tap)
-//    }
-//}
+
 extension UIViewController {
     func presentAlertControllerWithOkayAction(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

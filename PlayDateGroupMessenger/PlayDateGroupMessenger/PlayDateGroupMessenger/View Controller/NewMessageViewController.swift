@@ -155,14 +155,6 @@ extension NewMessageViewController: UISearchBarDelegate {
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
     }
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        filteredSearchBar.removeAll(keepingCapacity: false)
-//        guard let predicateString = searchBar.text else { return }
-//        filteredSearchBar = users.filter({$0.name?.range(of: predicateString) != nil})
-//        filteredSearchBar.sort {$0.name! < $1.name!}
-//        isSearching = (filteredSearchBar.count == 0) ? false : true
-//        tableView.reloadData()
-//        }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text == nil || searchBar.text == "" {

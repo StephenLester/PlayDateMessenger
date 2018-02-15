@@ -12,6 +12,7 @@ import AVFoundation
 
 class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+
     var user: User? {
         didSet {
             navigationItem.title = user?.name
@@ -57,7 +58,7 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundView = UIImageView(image: UIImage(named: "chatBackGroundImage"))
+        collectionView?.backgroundView = UIImageView(image: UIImage(named: "NewMessageImage"))
         collectionView?.backgroundView?.alpha = 0.5
        
         
@@ -68,6 +69,10 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
         collectionView?.register(ChatMessageCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
         collectionView?.keyboardDismissMode = .interactive
+        // added to collection view but not sure if it being called or what it does exactly
+        collectionView?.autoresizingMask = [.flexibleHeight]
+//        collectionView?.collectionViewLayout.collectionViewContentSize
+    
         
         setupKeyboardObservers()
     }
@@ -252,22 +257,24 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
         
         let message = messages[indexPath.item]
         
-        cell.message = message
+        cell.messageArray = message
         
         cell.textView.text = message.text
         
         setupCell(cell, message: message)
-        
-        if let text = message.text {
-            //a text message
-            cell.bubbleWidthAnchor?.constant = estimateFrameForText(text).width + 32
-            cell.textView.isHidden = false
-        } else if message.imageUrl != nil {
-            //fall in here if its an image message
-            cell.bubbleWidthAnchor?.constant = 200
-            cell.textView.isHidden = true
-        }
-        
+//
+//        if let text = message.text {
+//            //a text message
+//            cell.bubbleWidthAnchor?.constant = estimateFrameForText(text).width + 32
+////            cell.bubbleView.autoresizingMask = [.flexibleTopMargin, .flexibleHeight]
+//
+//            cell.textView.isHidden = false
+//        } else if message.imageUrl != nil {
+//            //fall in here if its an image message
+//            cell.bubbleWidthAnchor?.constant = 200
+//            cell.textView.isHidden = true
+//        }
+//
         cell.playButton.isHidden = message.videoUrl == nil
         
         return cell
@@ -277,14 +284,15 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
         if let profileImageUrl = self.user?.profileImageUrl {
             cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
         }
-        
+//        let view = UICollectionViewFlowLayout()
+//        view.estimatedItemSize = CGSize(width: cell.textView.frame.width, height: cell.textView.frame.height)
+//        cell.frame.size = view.estimatedItemSize
         if message.fromId == Auth.auth().currentUser?.uid {
             //outgoing blue
             cell.bubbleView.backgroundColor = ChatMessageCollectionViewCell.blueColor
             cell.textView.textColor = UIColor.white
             cell.textView.isScrollEnabled = false
             cell.profileImageView.isHidden = true
-            
             cell.bubbleViewRightAnchor?.isActive = true
             cell.bubbleViewLeftAnchor?.isActive = false
             
@@ -294,7 +302,6 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
             cell.textView.textColor = UIColor.black
             cell.textView.isScrollEnabled = false
             cell.profileImageView.isHidden = false
-            
             cell.bubbleViewRightAnchor?.isActive = false
             cell.bubbleViewLeftAnchor?.isActive = true
         }
@@ -319,6 +326,8 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
         let message = messages[indexPath.item]
         if let text = message.text {
             height = estimateFrameForText(text).height + 20
+
+            
         } else if let imageWidth = message.imageWidth?.floatValue, let imageHeight = message.imageHeight?.floatValue {
             
             // h1 / w1 = h2 / w2
@@ -331,6 +340,7 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
         
         let width = UIScreen.main.bounds.width
         return CGSize(width: width, height: height)
+        
     }
     
     fileprivate func estimateFrameForText(_ text: String) -> CGRect {
@@ -338,6 +348,8 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)], context: nil)
     }
+
+ 
     
     var containerViewBottomAnchor: NSLayoutConstraint?
     
@@ -413,7 +425,7 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
                 self.blackBackgroundView?.alpha = 1
                 self.inputContainerView.alpha = 0
                 
-                // math?
+                // math
                 // h2 / w1 = h1 / w1
                 // h2 = h1 / w1 * w1
                 let height = self.startingFrame!.height / self.startingFrame!.width * keyWindow.frame.width
