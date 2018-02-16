@@ -46,10 +46,10 @@ class NewMessageViewController: UITableViewController{
         searchbar.delegate = self
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        searchbar.text = ""
-        
-    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        searchbar.text = ""
+//        
+//    }
     
     func fetchUser() {
         Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in

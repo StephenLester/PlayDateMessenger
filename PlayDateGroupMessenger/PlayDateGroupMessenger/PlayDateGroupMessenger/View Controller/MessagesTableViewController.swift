@@ -37,6 +37,7 @@ class MessagesTableViewController: UITableViewController {
 //        observeMessages()
         
         tableView.allowsMultipleSelectionDuringEditing = true
+        tableView?.keyboardDismissMode = .interactive
        
     }
     

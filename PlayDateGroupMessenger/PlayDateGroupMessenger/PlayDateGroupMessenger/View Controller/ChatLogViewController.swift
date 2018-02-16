@@ -70,7 +70,7 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
         
         collectionView?.keyboardDismissMode = .interactive
         // added to collection view but not sure if it being called or what it does exactly
-        collectionView?.autoresizingMask = [.flexibleHeight]
+//        collectionView?.autoresizingMask = [.flexibleHeight]
 //        collectionView?.collectionViewLayout.collectionViewContentSize
     
         
@@ -262,19 +262,19 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
         cell.textView.text = message.text
         
         setupCell(cell, message: message)
-//
-//        if let text = message.text {
-//            //a text message
-//            cell.bubbleWidthAnchor?.constant = estimateFrameForText(text).width + 32
-////            cell.bubbleView.autoresizingMask = [.flexibleTopMargin, .flexibleHeight]
-//
-//            cell.textView.isHidden = false
-//        } else if message.imageUrl != nil {
-//            //fall in here if its an image message
-//            cell.bubbleWidthAnchor?.constant = 200
-//            cell.textView.isHidden = true
-//        }
-//
+
+        if let text = message.text {
+            //a text message
+            cell.bubbleWidthAnchor?.constant = estimateFrameForText(text).width + 32
+//            cell.bubbleView.autoresizingMask = [.flexibleTopMargin, .flexibleHeight]
+
+            cell.textView.isHidden = false
+        } else if message.imageUrl != nil {
+            //fall in here if its an image message
+            cell.bubbleWidthAnchor?.constant = 200
+            cell.textView.isHidden = true
+        }
+
         cell.playButton.isHidden = message.videoUrl == nil
         
         return cell
@@ -337,7 +337,7 @@ class ChatLogViewController: UICollectionViewController, UITextFieldDelegate, UI
             height = CGFloat(imageHeight / imageWidth * 200)
             
         }
-        
+    
         let width = UIScreen.main.bounds.width
         return CGSize(width: width, height: height)
         

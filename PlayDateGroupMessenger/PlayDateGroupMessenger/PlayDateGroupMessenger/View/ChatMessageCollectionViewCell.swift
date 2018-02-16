@@ -63,11 +63,10 @@ class ChatMessageCollectionViewCell: UICollectionViewCell {
     
     let textView: UITextView = {
         let tv = UITextView()
+        tv.translatesAutoresizingMaskIntoConstraints = false
         tv.text = "SAMPLE TEXT FOR NOW"
         tv.font = UIFont.systemFont(ofSize: 16)
 //        tv.font = UIFont.init(name: "noteworthy", size: 20)
-        tv.font = UIFont.init(name: "noteworthy", size: 16)
-        tv.translatesAutoresizingMaskIntoConstraints = false
         tv.backgroundColor = UIColor.clear
         tv.textColor = .white
         tv.isEditable = false
